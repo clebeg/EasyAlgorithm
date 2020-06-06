@@ -5,6 +5,10 @@ import java.util.Comparator;
 
 abstract class BaseSort<E extends Comparable> implements ISort {
     protected long costTime = 0;
+    // 交换次数
+    protected int swapTimes = 0;
+    // 比较次数
+    protected int compareTimes = 0;
     protected E[] datasets = null;
     protected Comparator<E> comparator = null;
 
@@ -26,27 +30,22 @@ abstract class BaseSort<E extends Comparable> implements ISort {
         sort();
         long end = System.currentTimeMillis();
         costTime = end - begin;
-        System.out.println(algoName + ": CostTime(ms) = " + costTime);
     }
     abstract public void sort();
 
     protected void swap(int from, int target) {
+        swapTimes++;
         E fromEle = datasets[from];
         datasets[from] = datasets[target];
         datasets[target] = fromEle;
     }
 
     protected int cmp(E e1, E e2) {
+        compareTimes++;
         if (comparator != null) {
             return comparator.compare(e1, e2);
         }
         return e1.compareTo(e2);
     }
 
-    @Override
-    public String toString() {
-        return "BaseSort{" +
-                "datasets=" + Arrays.toString(datasets) +
-                '}';
-    }
 }

@@ -20,8 +20,9 @@ public class SampleDataUtil {
 
     public static void printArray(Object[] arrays) {
         for (Object array : arrays) {
-            System.out.printf("%s ", array);
+            System.out.printf("%s, ", array);
         }
+        System.out.println();
     }
 
     public static void main(String[] args) {
