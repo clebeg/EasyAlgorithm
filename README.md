@@ -29,4 +29,4 @@ QuickSort{costTime=106(ms), swapTimes=132690, compareTimes=4315318}
 
 #### 2.1.2 插入排序算法
 - [x] 插入排序：[io.github.clebeg.algo.sort.InsertSort](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/sort/InsertSort.java)
-- [ ] 希尔排序：[io.github.clebeg.algo.sort.ShellSort](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/sort/ShellSort.java)
+- [x] 希尔排序：[io.github.clebeg.algo.sort.ShellSort](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/sort/ShellSort.java)
