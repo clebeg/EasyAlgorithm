@@ -9,7 +9,7 @@ package name: io.github.clebeg.model
 ## 算法
 ### 排序算法(sort algorithm)
 算法效率：    
-![十大排序算法效率](https://upload-images.jianshu.io/upload_images/2463290-8cc59ad6c917aa9e.png?imageMogr2/auto-orient/strip|imageView2/2/w/639)    
+![排序算法效率](https://images2015.cnblogs.com/blog/975503/201702/975503-20170214211234550-1109833343.png)    
 package name: io.github.clebeg.algo.sort     
 
 **已经实现的算法**
