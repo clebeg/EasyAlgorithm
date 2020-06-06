@@ -1,4 +1,4 @@
-package io.github.clebeg;
+package io.github.clebeg.model;
 
 import io.github.clebeg.model.BinaryHeap;
 

@@ -3,7 +3,7 @@ package io.github.clebeg.algo.sort;
 import java.util.Arrays;
 import java.util.Comparator;
 
-abstract class BaseSort<E extends Comparable> implements ISort {
+abstract public class BaseSort<E extends Comparable> implements ISort {
     protected long costTime = 0;
     // 交换次数
     protected int swapTimes = 0;
