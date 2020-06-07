@@ -31,15 +31,14 @@ public class ShellSort<E extends Comparable> extends BaseSort<E> {
     }
 
     public void sort() {
-        for (int groupNum = datasets.length >> 1; groupNum > 2; groupNum >>= 1) {
+        for (int groupNum = datasets.length >> 1; groupNum >= 1; groupNum >>= 1) {
             sortByGroup(groupNum);
         }
-        sortByGroup(1);
     }
 
     private void sortByGroup(int groupNum) {
         for (int i = 0; i < groupNum; i++) {
-            for (int j = groupNum; j < datasets.length; j+=groupNum) {
+            for (int j = i+groupNum; j < datasets.length; j+=groupNum) {
                 insert(j, groupNum);
             }
         }
@@ -52,7 +51,7 @@ public class ShellSort<E extends Comparable> extends BaseSort<E> {
      */
     private void insert(int end, int groupNum) {
         E pivot = datasets[end];
-        while ((end - groupNum) > 0 && cmp(datasets[end - groupNum], pivot) > 0) {
+        while ((end - groupNum) >= 0 && cmp(datasets[end - groupNum], pivot) > 0) {
             datasets[end] = datasets[end - groupNum];
             end -= groupNum;
         }
@@ -82,7 +81,8 @@ public class ShellSort<E extends Comparable> extends BaseSort<E> {
         Integer[] integers = SampleDataUtil.randIntArray(5, 5, 30);
         SampleDataUtil.printArray(integers);
         ShellSort shellSort = new ShellSort(integers);
-        shellSort.sortTimeIt("QuickSort");
+        shellSort.sortTimeIt("ShellSort");
+        System.out.println(ArrayUtils.isSorted(integers));
         System.out.println(shellSort.show());
     }
 }

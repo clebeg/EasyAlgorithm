@@ -8,48 +8,40 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * 插入排序
- * 1. 第一个元素相当于已排序好
- * 2. 然后不断将当前位置数据插入到左边已排序好数组的合适位置中
+ * 选择排序
+ * 1. 每次选择一个最大的元素放到后面
  * 时间复杂度：平均: O(n^2) 最好: O(n^2) 最坏: O(n^2)
  * 空间复杂度：O(1)
  * In-Place
  * 稳定
  * 优化点：
- *  TODO: 选择合适位置的方式可以用二分查找，减少比较次数
+ *  选择的时候用最大堆 堆排序
  * @param <E>
  */
-public class InsertSort<E extends Comparable> extends BaseSort<E> {
-    public InsertSort(E[] datasets, Comparator<E> comparator) {
+public class SelectSort<E extends Comparable> extends BaseSort<E> {
+    public SelectSort(E[] datasets, Comparator<E> comparator) {
         super(datasets, comparator);
     }
 
-    public InsertSort(E[] datasets) {
+    public SelectSort(E[] datasets) {
         super(datasets);
     }
 
     public void sort() {
-        for (int i = 1; i < datasets.length; i++) {
-            insert(i);
+        // 每次最大的元素
+        for (int i = datasets.length - 1; i > 0; i--) {
+            int maxInd = 0;
+            for (int j = 1; j <= i; j++) {
+                if (cmp(datasets[j], datasets[maxInd]) > 0) {
+                    maxInd = j;
+                }
+            }
+            swap(maxInd, i);
         }
-    }
-
-    /**
-     * 将 end 所在的元素 插入到 [begin, end) 合适的位置上
-     * @param end 有序列表结束位置
-     * @return
-     */
-    private void insert(int end) {
-        E pivot = datasets[end];
-        while (end > 0 && cmp(datasets[end-1], pivot) > 0) {
-            datasets[end] = datasets[end-1];
-            end--;
-        }
-        datasets[end] = pivot;
     }
 
     public String show() {
-        return "InsertSort{" +
+        return "SelectSort{" +
                 "costTime=" + costTime +
                 "(ms), swapTimes=" + swapTimes +
                 ", compareTimes=" + compareTimes +
@@ -59,7 +51,7 @@ public class InsertSort<E extends Comparable> extends BaseSort<E> {
 
     @Override
     public String toString() {
-        return "InsertSort{" +
+        return "SelectSort{" +
                 "costTime=" + costTime +
                 "(ms), swapTimes=" + swapTimes +
                 ", compareTimes=" + compareTimes +
@@ -69,9 +61,9 @@ public class InsertSort<E extends Comparable> extends BaseSort<E> {
     public static void main(String[] args) {
         Integer[] integers = SampleDataUtil.randIntArray(10, 5, 500);
         SampleDataUtil.printArray(integers);
-        InsertSort insertSort = new InsertSort(integers);
-        insertSort.sortTimeIt("InsertSort");
+        SelectSort selectSort = new SelectSort(integers);
+        selectSort.sortTimeIt("SelectSort");
         System.out.println(ArrayUtils.isSorted(integers));
-        System.out.println(insertSort.show());
+        System.out.println(selectSort.show());
     }
 }
