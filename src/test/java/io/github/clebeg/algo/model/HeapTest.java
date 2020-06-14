@@ -21,5 +21,6 @@ public class HeapTest {
         System.out.println(integerBinaryHeap);
         integerBinaryHeap.removeTop();
         System.out.println(integerBinaryHeap);
+
     }
 }
