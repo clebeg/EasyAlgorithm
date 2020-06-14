@@ -1,6 +1,4 @@
-package io.github.clebeg.model;
-
-import io.github.clebeg.model.BinaryHeap;
+package io.github.clebeg.algo.model;
 
 import java.util.Comparator;
 

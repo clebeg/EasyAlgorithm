@@ -1,4 +1,4 @@
-package io.github.clebeg.model;
+package io.github.clebeg.algo.model;
 
 import java.util.Comparator;
 
