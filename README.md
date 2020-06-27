@@ -11,6 +11,12 @@ package name: io.github.clebeg.model
 - [x] 堆-二叉堆：[io.github.clebeg.algo.model.BinaryHeap](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/model/BinaryHeap.java)
 - [x] 并查集：[io.github.clebeg.algo.model.UnionFind](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/model/UnionFind.java)
 
+### 1.2 图基本表示
+图有两种基本的表示方法，邻接矩阵和邻接表 此处采用的是邻接表，但是也记录指向每个顶点的边
+邻接表表示法：[io.github.clebeg.algo.model.graph.ListGraph](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/model/graph/ListGraph.java)
+- [x] 广度优先搜索: 具体见 ListGraph 的 bfs 方法
+- [x] 深度优先搜索: 具体见 ListGraph 的 dfs 方法
+
 ## 二、算法
 ### 2.1 排序算法(sort algorithm)
 **算法效率:**      
