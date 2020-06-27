@@ -1,8 +1,6 @@
-[TOC]    
 # EasyAlgorithm
-implement all data structure and algorithm by java, add use best way!      
-用Java轻松掌握所有算法与数据结构追求最高效的方式实现     
-**Author:** clebeg
+implement all data structure and algorithm by java, add use best way implement!      
+尝试用Java轻松掌握所有算法与数据结构，并且追求最高效的方式实现
 
 ## 一、数据结构(data structure)
 package name: io.github.clebeg.model
