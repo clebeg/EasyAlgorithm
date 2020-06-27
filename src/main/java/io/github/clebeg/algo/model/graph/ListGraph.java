@@ -77,6 +77,21 @@ class ListGraph<V, E> implements Graph<V, E> {
         }
     }
 
+    /**
+     * 广度优先搜索
+     * 实现思路：通过队列来实现
+     * 初始化：初始化记录已访问过节点的Set，初始化队列，将起始节点放入队列
+     * 循环直到队列为空：
+     *    队顶元素出队
+     *        如果此顶点访问过，继续循环
+     *        否则访问此元素，并且标记为已访问，然后将以此节点出发的边指向的所有顶点加入队列，继续循环
+     * Tips：在 java 中可以利用 LinkedList 来实现 堆栈和队列
+     * 队列先进先出 对应 List 的 offer，poll  方法组后
+     * 堆栈后进先出 对应 List 的 addFirst，poll 方法组后
+     * 而 peek 只是查看一下 head 元素
+     * @param begin
+     * @param vertexVisitor
+     */
     public void bfs(V begin, VertexVisitor<V> vertexVisitor) {
         HashSet<V> visited = new HashSet<>();
         if (!vertexHM.containsKey(begin)) return;
@@ -95,13 +110,28 @@ class ListGraph<V, E> implements Graph<V, E> {
         }
     }
 
+    /**
+     * 深度优先搜索
+     * 实现思路：利用堆栈来实现
+     * 初始化：
+     *   初始化记录已访问过节点的Set，初始化堆栈，将起始节点放入堆栈
+     *   查看起始元素，并将其放入已访问Set中
+     * 循环直到堆栈为空：
+     *   取出堆栈顶部元素，但不是移除
+     *   判断以堆栈顶部元素出发的所有边指向的顶点是否还有未访问的顶点：
+     *     如果有：选择其中一个未访问的顶点，访问，并标记为已访问，将其加入堆栈
+     *     如果没有：将此顶点移出堆栈
+     * @param begin
+     * @param vertexVisitor
+     */
     public void dfs(V begin, VertexVisitor<V> vertexVisitor) {
         HashSet<V> visited = new HashSet<>();
         if (!vertexHM.containsKey(begin)) return;
-        vertexVisitor.visit(begin);
-        visited.add(begin);
         LinkedList<Vertex> stack = new LinkedList<>();
         stack.addFirst(vertexHM.get(begin));
+        vertexVisitor.visit(begin);
+        visited.add(begin);
+
         while (!stack.isEmpty()) {
             Vertex<V, E> top = stack.peek();
             boolean flag = true;
