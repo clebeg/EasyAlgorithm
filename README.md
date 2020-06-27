@@ -14,6 +14,8 @@ package name: io.github.clebeg.model
 邻接表表示法：[io.github.clebeg.algo.model.graph.ListGraph](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/model/graph/ListGraph.java)
 - [x] 广度优先搜索: 具体见 ListGraph 的 bfs 方法
 - [x] 深度优先搜索: 具体见 ListGraph 的 dfs 方法
+- [x] 最小生成树Prim算法: 具体见 ListGraph 的 prim 方法
+- [ ] 最小生成树Kruskal算法: 具体见 ListGraph 的 kruskal 方法
 
 ## 二、算法
 ### 2.1 排序算法(sort algorithm)

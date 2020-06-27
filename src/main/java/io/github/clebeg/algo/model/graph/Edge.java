@@ -7,7 +7,7 @@ import java.util.Objects;
  * @param <V>
  * @param <E>
  */
-public class Edge<V, E> {
+public class Edge<V, E extends Comparable> implements Comparable<Edge<V, E>>{
     protected V from;
     protected V to;
     protected E weight;
@@ -31,5 +31,10 @@ public class Edge<V, E> {
     @Override
     public int hashCode() {
         return Objects.hash(from, to, weight);
+    }
+
+    @Override
+    public int compareTo(Edge<V, E> o) {
+        return this.weight.compareTo(o.weight);
     }
 }

@@ -1,6 +1,7 @@
 package io.github.clebeg.algo.model.graph;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * 图接口，抽象出图数据结构应该有的方法
@@ -8,7 +9,7 @@ import java.util.Collection;
  * V：顶点值类型
  * E：边权重类型
  */
-public interface Graph<V, E> {
+public interface Graph<V, E extends Comparable> {
     // 图中顶点数量
     int vertexSize();
 
@@ -17,13 +18,17 @@ public interface Graph<V, E> {
 
     // 添加顶点
     void addVertex(V v);
+
     void addVertexes(Collection<V> vs);
+
     // 添加边
     void addEdge(V from, V to, E weight);
 
     void addEdge(V from, V to);
+
     // 删除顶点
     void removeVertex(V v);
+
     // 删除边
     void removeEdge(V from, V to, E weight);
 
@@ -34,9 +39,19 @@ public interface Graph<V, E> {
      * return void
      */
     void bfs(V begin, VertexVisitor<V> vertexVisitor);
+
     // 深度优先搜索
     void dfs(V begin, VertexVisitor<V> vertexVisitor);
+
     interface VertexVisitor<V> {
         void visit(V v);
     }
+
+    /**
+     * 最小生成树：minimum spanning tree
+     * 主要两种算法：prim kruskal
+     * 具备最小生成树的图必须满足：无向联通图
+     * @return 组成最小生成树的边
+     */
+    Set<Edge<V, E>> mst(String method);
 }

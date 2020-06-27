@@ -1,8 +1,11 @@
 package io.github.clebeg.algo.model.graph;
 
+import io.github.clebeg.algo.model.UnionFind;
+
 import java.util.*;
 
-class ListGraph<V, E> implements Graph<V, E> {
+class ListGraph<V, E extends Comparable> implements Graph<V, E> {
+    boolean hasDirection = false;
     HashMap<V, Vertex<V, E>> vertexHM = new HashMap<>();
     Set<Vertex<V, E>> vertexSet = new HashSet<>();
     Set<Edge<V, E>> edgeSet = new HashSet<>();
@@ -147,7 +150,92 @@ class ListGraph<V, E> implements Graph<V, E> {
         }
     }
 
-    public ListGraph(Collection<Edge<V, E>> edges, Boolean hasDirection) {
+    /**
+     * 最小生成树：minimum spanning tree
+     * 主要两种算法：prim kruskal
+     * 具备最小生成树的图必须满足：无向联通图
+     * @return 组成最小生成树的边
+     */
+    @Override
+    public Set<Edge<V, E>> mst(String method) {
+        if (this.hasDirection) {
+            throw new UnsupportedOperationException("Only No direction Has Minimum Spanning Tree.");
+        }
+        if (method.equals("prim")) {
+            return prim();
+        }
+        if (method.equals("kruskal")){
+            return kruskal();
+        }
+        throw new UnsupportedOperationException("minimum spanning tree method only support: prim, kruskal");
+    }
+
+    /**
+     * 最小生成树：minimum spanning tree
+     * kruskal 算法，将边按权重从小到大排序，权重小的一定属于最小生成树，但是必须满足一定的条件，就是此边是属于两个集合
+     * 算法原理：
+     *  初始化：将所有的顶点单独成立一个集合，将所有边放入到最小堆中，将最终组成最小生成树的所有边组成的Set初始化为空Set
+     * 循环直到（最小生成树的边等于【顶点数量-1】 或者 最小堆为空）：
+     *  从最小堆中得到权重最小的分割边
+     *  判断此边连接的两个顶点是不是属于一个集合：
+     *      如果是：继续循环
+     *      如果不是：
+     *          将此边加入最小生成树的边中
+     *          并且将此边连接的两个顶点的集合组成一个大集合
+     * 此算法需要用到并查集
+     * Todo：需要一个支持泛型的并查集
+     * @return 组成最小生成树的边 如果不是无向联通图就抛出异常
+     */
+    private Set<Edge<V,E>> kruskal() {
+        HashSet<Edge<V, E>> mstEdges = new HashSet<>();
+        PriorityQueue<Edge<V, E>> queue = new PriorityQueue<>(edgeSet);
+        // 需要一个通用的并查集
+        return null;
+    }
+
+    /**
+     * 最小生成树：minimum spanning tree
+     * prim 算法，本质是两个子图直接的所有链接边，最小的边一定属于最小生成树的边，于是可以将一个顶点慢慢扩散到所有顶点
+     * 算法原理：
+     *  初始化：将最终组成最小生成树的所有边组成的Set初始化为空Set、初始化访问过的顶点Set、最小堆存放所有的分割边
+     *  初始化顶点、将顶点对应的所有outEdges加入最小堆中、将初始化顶点加入访问过的顶点集合中
+     * 循环直到（最小生成树的边等于【顶点数量-1】 或者 最小堆为空）：
+     *  从最小堆中得到权重最小的分割边
+     *  判断此边的to顶点是否访问过：
+     *      如果是：
+     *          将此边加入最小生成树的边中，将此边的to顶点加入访问过的集合中
+     *          将此边对应的to顶点的outEdges边加入最小堆中
+     *      否则继续循环
+     * @return 组成最小生成树的边 如果不是无向联通图就抛出异常
+     */
+    private Set<Edge<V, E>> prim() {
+        Iterator<Vertex<V, E>> it = vertexSet.iterator();
+        if (!it.hasNext()) {
+            return null;
+        }
+        Vertex<V, E> begin = it.next();
+        PriorityQueue<Edge<V, E>> queue = new PriorityQueue<>(begin.outEdges);
+        HashSet<V> visited = new HashSet<>();
+        HashSet<Edge<V, E>> mstEdges = new HashSet<>();
+        visited.add(begin.value);
+
+        while (!queue.isEmpty() && visited.size() < vertexSet.size()) {
+            Edge<V, E> curEdge = queue.poll();
+            if (visited.contains(curEdge.to)) continue;
+            visited.add(curEdge.to);
+            mstEdges.add(curEdge);
+            queue.addAll(vertexHM.get(curEdge.to).outEdges);
+        }
+        if (visited.size() < vertexSet.size()) {
+            throw new UnsupportedOperationException("Only Connect Graph Has Minimum Spanning Tree.");
+        } else {
+            return mstEdges;
+        }
+    }
+
+
+    public ListGraph(Collection<Edge<V, E>> edges, boolean hasDirection) {
+        this.hasDirection = hasDirection;
         if (hasDirection) {
             edges.forEach(edge -> addEdge(edge.from, edge.to, edge.weight));
         } else {
