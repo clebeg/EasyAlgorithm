@@ -1,6 +1,6 @@
 package io.github.clebeg.algo.leetcode;
 
-public class StringTest {
+public class LeetCode125Test {
     private static final char beginU = 'A';
     private static final char beginS = 'a';
     private static final char begin0 = '0';
