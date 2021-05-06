@@ -1,6 +1,7 @@
+[TOC]
 # EasyAlgorithm
 implement all data structure and algorithm by java, add use best way implement!      
-尝试用Java轻松掌握所有算法与数据结构，并且追求最高效的方式实现
+尝试用 Java 轻松掌握所有算法与数据结构，并且追求最高效的方式实现
 
 ## 一、数据结构(data structure)
 package name: io.github.clebeg.model
@@ -9,7 +10,10 @@ package name: io.github.clebeg.model
 - [x] 堆-二叉堆：[io.github.clebeg.algo.model.BinaryHeap](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/model/BinaryHeap.java)
 - [x] 并查集：[io.github.clebeg.algo.model.UnionFind](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/model/UnionFind.java)
 
-### 1.2 图基本表示
+### 1.2 树基本表示
+二叉查找树：AVL树、红黑树
+
+### 1.3 图基本表示
 图有两种基本的表示方法，邻接矩阵和邻接表 此处采用的是邻接表，但是也记录指向每个顶点的边
 邻接表表示法：[io.github.clebeg.algo.model.graph.ListGraph](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/model/graph/ListGraph.java)
 - [x] 广度优先搜索: 具体见 ListGraph 的 bfs 方法
@@ -20,7 +24,7 @@ package name: io.github.clebeg.model
 ## 二、算法
 ### 2.1 排序算法(sort algorithm)
 **算法效率:**      
-![7大基于比较的排序算法效率](https://img-blog.csdn.net/20180807094112221?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3OTYyNjAw/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)    
+![7大基于比较的排序算法效率](https://segmentfault.com/img/bVbCXi7)    
 package name: io.github.clebeg.algo.sort 
 
 **实际测试:**    
