@@ -12,7 +12,7 @@ package name: io.github.clebeg.model
 
 ### 1.2 树基本表示
 二叉查找树
-- [x] 红黑树：[io.github.clebeg.algo.model.tree.RBTree](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/model/tree.RBTree.java)
+- [x] 红黑树：[io.github.clebeg.algo.model.tree.RBTree](https://github.com/clebeg/EasyAlgorithm/blob/master/src/main/java/io/github/clebeg/algo/model/tree/RBTree.java)
 
 ### 1.3 图基本表示
 图有两种基本的表示方法，邻接矩阵和邻接表 此处采用的是邻接表，但是也记录指向每个顶点的边
