@@ -141,9 +141,111 @@ public class RBTree<K extends Comparable, V> {
      * 1.2 如果兄弟是一个2节点，那么父亲就下去和两个儿子合并，删除需要删除的节点，然后递归处理父节点
      * @param key
      */
-    public void remove(K key) {
+    public V remove(K key) throws Exception {
+        RBNode point = root;
+        while (point != null) {
+            int cmp = point.getKey().compareTo(key);
+            if (cmp == 0) {
+                break;
+            } else if (cmp > 0) {
+                // 当前值大于需要删除的值
+                point = point.left;
+            } else {
+                point = point.right;
+            }
+        }
+        if (point == null) {
+            return null;
+        }
+        V oldValue = (V) point.getValue();
+        deleteNode(point);
+        return oldValue;
+    }
+
+    private void deleteNode(RBNode point) {
+        RBNode node = point;
+        RBNode replaceNode;
+        // 如果当前需要删除的节点是中间节点
+        if (getLeft(point) != null && getRight(point) != null) {
+            // 需要找到后继或者前驱代替
+            replaceNode = successorNode(point);
+            point.setKey(replaceNode.getKey());
+            point.setValue(replaceNode.getValue());
+            node = replaceNode;
+        }
+        // 运行到此处的 node 只可能有一个儿子
+        replaceNode = getLeft(node) != null ? getLeft(node) : getRight(node);
+
+        if (replaceNode != null) {
+            // 执行替换并将node脱离
+            transferParent(node, replaceNode);
+            setRight(node, null);
+            setLeft(node, null);
+            setParent(node, null);
+
+            if (replaceNode.color == BLACK) {
+                adjustAfterRemove(replaceNode);
+            }
+        } else if (getParent(node) == null) {
+            // 删除根节点
+            root = null;
+        } else {
+            if (node.color == BLACK) {
+                adjustAfterRemove(node);
+            }
+            // 然后再脱离父亲，删除
+            RBNode pNode = getParent(node);
+            if (getLeft(pNode) == node) {
+                setLeft(pNode, null);
+            } else {
+                setRight(pNode, null);
+            }
+            setParent(node, null);
+        }
+    }
+
+    /**
+     * 删除节点之后做相应的调整
+     * @param node
+     */
+    private void adjustAfterRemove(RBNode node) {
 
     }
+
+    private RBNode predecessorNode(RBNode node) {
+        RBNode curNode = getLeft(node);
+        while (getRight(curNode) != null) {
+            curNode = getRight(curNode);
+        }
+        if (curNode == null) {
+            // 真正执行是不会走到这个逻辑
+            RBNode sonNode = node;
+            curNode = getParent(sonNode);
+            while (getLeft(curNode) != sonNode) {
+                sonNode = curNode;
+                curNode = getParent(sonNode);
+            }
+        }
+        return curNode;
+    }
+
+    private RBNode successorNode(RBNode node) {
+        RBNode curNode = getRight(node);
+        while (getLeft(curNode) != null) {
+            curNode = getLeft(curNode);
+        }
+        if (curNode == null) {
+            // 真正执行是不会走到这个逻辑
+            RBNode sonNode = node;
+            curNode = getParent(sonNode);
+            while (getRight(curNode) != sonNode) {
+                sonNode = curNode;
+                curNode = getParent(sonNode);
+            }
+        }
+        return curNode;
+    }
+
     public void put(K key, V value) {
         // 1. 先按二叉搜索树方式插入
         if (root == null) {
