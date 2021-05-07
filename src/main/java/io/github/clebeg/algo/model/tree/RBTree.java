@@ -1,5 +1,7 @@
 package io.github.clebeg.algo.model.tree;
 
+import com.sun.org.apache.regexp.internal.RE;
+
 /**
  * 红黑树
  * <p> 学习地址：http://www.cainiaoxueyuan.com/suanfa/15196.html
@@ -141,7 +143,7 @@ public class RBTree<K extends Comparable, V> {
      * 1.2 如果兄弟是一个2节点，那么父亲就下去和两个儿子合并，删除需要删除的节点，然后递归处理父节点
      * @param key
      */
-    public V remove(K key) throws Exception {
+    public V remove(K key) {
         RBNode point = root;
         while (point != null) {
             int cmp = point.getKey().compareTo(key);
@@ -168,7 +170,8 @@ public class RBTree<K extends Comparable, V> {
         // 如果当前需要删除的节点是中间节点
         if (getLeft(point) != null && getRight(point) != null) {
             // 需要找到后继或者前驱代替
-            replaceNode = successorNode(point);
+//            replaceNode = successorNode(point);
+            replaceNode = predecessorNode(point);
             point.setKey(replaceNode.getKey());
             point.setValue(replaceNode.getValue());
             node = replaceNode;
@@ -183,7 +186,8 @@ public class RBTree<K extends Comparable, V> {
             setLeft(node, null);
             setParent(node, null);
 
-            if (replaceNode.color == BLACK) {
+            if (node.color == BLACK) {
+                // 替换节点的颜色一定是红色，只需要变色即可
                 adjustAfterRemove(replaceNode);
             }
         } else if (getParent(node) == null) {
@@ -209,7 +213,81 @@ public class RBTree<K extends Comparable, V> {
      * @param node
      */
     private void adjustAfterRemove(RBNode node) {
+        // 自己是二节点，需要和兄弟借
+        while (node != root && getColor(node) == BLACK) {
+            // 如果自己是左孩子
+            if (node == getLeft(getParent(node))) {
+                RBNode bNode = getRight(getParent(node));
 
+                // 如果兄弟的颜色是红色，说明不是真正的兄弟
+                if (getColor(bNode) == RED) {
+                    // 左旋变色，对应同一颗234树
+                    setColor(getParent(node), RED);
+                    setColor(bNode, BLACK);
+                    leftRotate(getParent(node));
+                    // 得到真正的兄弟
+                    bNode = getRight(getParent(node));
+                }
+                // 兄弟没得借，那只能把兄弟变红
+                if (getColor(getLeft(bNode)) == BLACK && getColor(getRight(bNode)) == BLACK) {
+                    setColor(bNode, RED);
+                    // 递归向上处理
+                    node = getParent(node);
+                } else {
+                    // 兄弟可以借，此时分3节点和4节点讨论
+                    if (getColor(getRight(bNode)) == BLACK) {
+                        // 三节点，想办法变为4节点
+                        setColor(getLeft(bNode), BLACK);
+                        setColor(bNode, RED);
+                        rightRotate(bNode);
+                        bNode = getRight(getParent(node));
+                    }
+                    // 4节点统一处理
+                    setColor(bNode, getColor(getParent(node)));
+                    setColor(getParent(node), BLACK);
+                    setColor(getRight(bNode), BLACK);
+                    // 一次性就借两个
+                    leftRotate(getParent(node));
+                    node = root;
+                }
+            } else {
+                RBNode bNode = getLeft(getParent(node));
+
+                // 如果兄弟的颜色是红色，说明不是真正的兄弟
+                if (getColor(bNode) == RED) {
+                    // 左旋变色，对应同一颗234树
+                    setColor(getParent(node), RED);
+                    setColor(bNode, BLACK);
+                    rightRotate(getParent(node));
+                    // 得到真正的兄弟
+                    bNode = getLeft(getParent(node));
+                }
+                // 兄弟没得借，那只能把兄弟变红
+                if (getColor(getLeft(bNode)) == BLACK && getColor(getRight(bNode)) == BLACK) {
+                    setColor(bNode, RED);
+                    // 递归向上处理
+                    node = getParent(node);
+                } else {
+                    // 兄弟可以借，此时分3节点和4节点讨论
+                    if (getColor(getLeft(bNode)) == BLACK) {
+                        // 三节点，想办法变为4节点
+                        setColor(getRight(bNode), BLACK);
+                        setColor(bNode, RED);
+                        leftRotate(bNode);
+                        bNode = getLeft(getParent(node));
+                    }
+                    // 4节点统一处理
+                    setColor(bNode, getColor(getParent(node)));
+                    setColor(getParent(node), BLACK);
+                    setColor(getLeft(bNode), BLACK);
+                    // 一次性就借两个
+                    rightRotate(getParent(node));
+                    node = root;
+                }
+            }
+
+        }
+        setColor(node, BLACK);
     }
 
     private RBNode predecessorNode(RBNode node) {
