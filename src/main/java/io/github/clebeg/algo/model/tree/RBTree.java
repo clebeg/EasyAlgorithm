@@ -287,6 +287,7 @@ public class RBTree<K extends Comparable, V> {
             }
 
         }
+        // 如果是红色，就设置为黑色，毕竟删了一个黑色，还回去
         setColor(node, BLACK);
     }
 
