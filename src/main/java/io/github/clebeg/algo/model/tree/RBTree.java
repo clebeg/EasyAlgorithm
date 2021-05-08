@@ -60,78 +60,6 @@ public class RBTree<K extends Comparable, V> {
         return root;
     }
 
-    /**
-     * 红黑树的节点，有指针指向父节点，和左右子节点
-     * 节点的值用 key value 对表示
-     * 颜色用 color 表示
-     * @param <K> key
-     * @param <V> value
-     */
-    class RBNode<K extends Comparable, V> {
-        private RBNode parent;
-        private RBNode left;
-        private RBNode right;
-        private K key;
-        private V value;
-        private boolean color = BLACK;
-
-        public RBNode() {
-        }
-
-        public RBNode(K key, V value, boolean color) {
-            this.key = key;
-            this.value = value == null ? (V) key : value;
-            this.color = color;
-        }
-
-        public RBNode getParent() {
-            return parent;
-        }
-
-        public void setParent(RBNode parent) {
-            this.parent = parent;
-        }
-
-        public RBNode getLeft() {
-            return left;
-        }
-
-        public void setLeft(RBNode left) {
-            this.left = left;
-        }
-
-        public RBNode getRight() {
-            return right;
-        }
-
-        public void setRight(RBNode right) {
-            this.right = right;
-        }
-
-        public K getKey() {
-            return key;
-        }
-
-        public void setKey(K key) {
-            this.key = key;
-        }
-
-        public V getValue() {
-            return value;
-        }
-
-        public void setValue(V value) {
-            this.value = value == null ? (V) key : value;;
-        }
-
-        public boolean isColor() {
-            return color;
-        }
-
-        public void setColor(boolean color) {
-            this.color = color;
-        }
-    }
 
     /**
      * 红黑树的删除，首先需要按二叉树删除方式，找到待删除节点，然后转换为以下几种情况
@@ -524,5 +452,78 @@ public class RBTree<K extends Comparable, V> {
 
     private RBNode getParent(RBNode node) {
         return node == null ? null : node.getParent();
+    }
+
+    /**
+     * 红黑树的节点，有指针指向父节点，和左右子节点
+     * 节点的值用 key value 对表示
+     * 颜色用 color 表示
+     * @param <K> key
+     * @param <V> value
+     */
+    class RBNode<K extends Comparable, V> {
+        private RBNode parent;
+        private RBNode left;
+        private RBNode right;
+        private K key;
+        private V value;
+        private boolean color = BLACK;
+
+        public RBNode() {
+        }
+
+        public RBNode(K key, V value, boolean color) {
+            this.key = key;
+            this.value = value == null ? (V) key : value;
+            this.color = color;
+        }
+
+        public RBNode getParent() {
+            return parent;
+        }
+
+        public void setParent(RBNode parent) {
+            this.parent = parent;
+        }
+
+        public RBNode getLeft() {
+            return left;
+        }
+
+        public void setLeft(RBNode left) {
+            this.left = left;
+        }
+
+        public RBNode getRight() {
+            return right;
+        }
+
+        public void setRight(RBNode right) {
+            this.right = right;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public void setKey(K key) {
+            this.key = key;
+        }
+
+        public V getValue() {
+            return value;
+        }
+
+        public void setValue(V value) {
+            this.value = value == null ? (V) key : value;;
+        }
+
+        public boolean isColor() {
+            return color;
+        }
+
+        public void setColor(boolean color) {
+            this.color = color;
+        }
     }
 }
